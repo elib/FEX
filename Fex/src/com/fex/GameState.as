@@ -4,10 +4,13 @@ package com.fex
 	
 	public class GameState extends FlxState
 	{
-		
+		private var _totalTime:Number = 0;
+		private var _nextYellow:Number = 0;
 		private var _payer:Payer;
 		
-		private var _floor:FlxSprite;
+		private var _floor:FlxSprite
+		
+		private var _yellows:FlxGroup;
 		
 		public function GameState() 
 		{
@@ -25,17 +28,24 @@ package com.fex
 			_floor = new FlxSprite(- FlxG.width/2, FlxG.height - 20);
 			_floor.makeGraphic(FlxG.width * 2, 10, 0xff000000);
 			_floor.immovable = true;
-			//_floor.scrollFactor.x = _floor.scrollFactor.y = 0;
 			this.add(_floor);
-			
 			
 			FlxG.camera.follow(_payer, FlxCamera.STYLE_PLATFORMER);
 			FlxG.camera.setBounds(0, 0, 100000, FlxG.height, true);
+			
+			_yellows = new FlxGroup(10);
+			this.add(_yellows);
+			for (var i:int = 0; i < 10; i++)
+			{
+				_yellows.add(new YellowThing());
+			}
 		}
 		
 		override public function update():void 
 		{
 			super.update();
+			
+			_totalTime += FlxG.elapsed;
 			
 			FlxG.collide(_payer, _floor);
 			
@@ -46,10 +56,15 @@ package com.fex
 				_floor.x = (screennum - 0.5) * FlxG.width;
 			}
 			
-			//_floor.x = _floor.getScreenXY().x;
-			
+			if (_nextYellow < _totalTime)
+			{
+				var yel:YellowThing = (_yellows.getFirstDead() as YellowThing);
+				if (yel != null)
+				{
+					yel.reset(Math.random() * FlxG.width + (_payer.x + FlxG.width / 2), FlxG.height - 40);
+					_nextYellow += 2;
+				}
+			}
 		}
-		
 	}
-
 }
