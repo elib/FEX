@@ -1,7 +1,7 @@
 package  
 {
 	import org.flixel.*;
-	import com.arms.*;
+	import com.fex.*;
 	[SWF(width = "640", height = "480", backgroundColor = "#000000")]
 	[Frame(factoryClass = "Preloader")]
  
@@ -11,7 +11,7 @@ package
 		
 		public function Fex()
 		{
-			super(320, 240, GameState, 2);
+			super(320, 240, TitleState, 2);
 		}
 	}
 }
