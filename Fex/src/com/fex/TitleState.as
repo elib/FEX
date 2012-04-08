@@ -20,10 +20,10 @@ package com.fex
 			var logo:FlxSprite = new FlxSprite(0, 0, ImgLogo);
 			this.add(logo);
 			
-			//
-			//var txt: FlxText = new FlxText(0, FlxG.height - 16, FlxG.width, "press any key");
-			//this.add(txt);
-			//
+			
+			var txt: FlxText = new FlxText(0, FlxG.height - 16, FlxG.width, "BY ELI WITH MUSIC BY DANIEL");
+			txt.setFormat(null, 8, 0xffaaaaaa, null, 0);
+			this.add(txt);
 			
 		}
 		

@@ -6,6 +6,13 @@ package com.fex
 	{
 		[Embed(source = '../../../../sprite.png')] private var ImgPayer:Class;
 		
+		private var _hasControl:Boolean = true;
+		
+		public function control(cancontrol:Boolean):void
+		{
+			_hasControl = cancontrol;
+		}
+		
 		public function Payer(X:Number, Y:Number) 
 		{
 			super(X, Y);
@@ -20,26 +27,38 @@ package com.fex
 			
 		}
 		
+		public function jump():void
+		{
+			var t:uint = touching;
+			if (isTouching(DOWN))
+			{
+				velocity.y = -200;
+			}
+		}
+		
 		override public function update():void 
 		{
 			super.update();
 			
-			if (isTouching(DOWN) && (FlxG.keys.justPressed("SPACE") || FlxG.keys.justPressed("W") || FlxG.keys.justPressed("UP")))
-			{
-				velocity.y = -200;
-			}
-			
-			if (FlxG.keys.LEFT || FlxG.keys.A)
-			{
-				facing = LEFT;
-				velocity.x = -200;
-			}
-			
-			
-			if (FlxG.keys.RIGHT || FlxG.keys.D)
-			{
-				facing = RIGHT;
-				velocity.x = 200;
+			if (_hasControl)
+			{				
+				if ((FlxG.keys.justPressed("SPACE") || FlxG.keys.justPressed("W") || FlxG.keys.justPressed("UP")))
+				{
+					jump();
+				}
+				
+				if (FlxG.keys.LEFT || FlxG.keys.A)
+				{
+					facing = LEFT;
+					velocity.x = -200;
+				}
+				
+				
+				if (FlxG.keys.RIGHT || FlxG.keys.D)
+				{
+					facing = RIGHT;
+					velocity.x = 200;
+				}
 			}
 		}
 		
